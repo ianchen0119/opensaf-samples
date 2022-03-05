@@ -13,6 +13,6 @@ void AppCkptOpenCallback(SaInvocationT invocation,
 			 SaCkptCheckpointHandleT checkpointHandle,
 			 SaAisErrorT error);
 void AppCkptSyncCallback(SaInvocationT invocation, SaAisErrorT error);
-void cpsv_test_sync_app_process(void *info);
+void cpsv_sync_app_process(void *info, char* data);
 
 #endif

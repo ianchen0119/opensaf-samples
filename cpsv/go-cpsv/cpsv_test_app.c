@@ -28,7 +28,7 @@ void AppCkptSyncCallback(SaInvocationT invocation, SaAisErrorT error)
 }
 
 /****************************************************************************
- * Name          : cpsv_test_sync_app_process
+ * Name          : cpsv_sync_app_process
  *
  * Description   : This is the function which is given as the input to the
  *                 Application task.
@@ -40,7 +40,7 @@ void AppCkptSyncCallback(SaInvocationT invocation, SaAisErrorT error)
  *
  * Notes         : None.
  *****************************************************************************/
-void cpsv_test_sync_app_process(void *info)
+void cpsv_sync_app_process(void *info, char* data)
 {
 	SaCkptHandleT ckptHandle;
 	SaCkptCheckpointHandleT checkpointHandle;
@@ -133,8 +133,7 @@ void cpsv_test_sync_app_process(void *info)
 
 		writeVector.sectionId.id = (unsigned char *)"11";
 		writeVector.sectionId.idLen = 2;
-		writeVector.dataBuffer =
-		    "The Checkpoint Service provides a facility for processes to store checkpoint data";
+		writeVector.dataBuffer = data;
 		writeVector.dataSize = strlen(writeVector.dataBuffer);
 		writeVector.dataOffset = 0;
 		writeVector.readSize = 0;
