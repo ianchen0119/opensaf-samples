@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     python2.7-minimal \ 
     net-tools \ 
     kmod \
+    golang \
     && apt-get autoremove -y \
     && apt-get clean \ 
     && rm /var/lib/apt/lists/*.lz4
@@ -35,7 +36,7 @@ ARG configureflags="--enable-imm-pbe --enable-tipc"
 
 # Packages for development. Branch "default" will be build, which is the latest. One can also use opensaf-4.6.x | opensaf-4.5.x | opensaf-4.4.x | opensaf-4.3.x instead. 
 RUN apt-get update && apt-get install -y \
-    mercurial gcc g++ libxml2-dev automake m4 autoconf libtool pkg-config make python-dev libsqlite3-dev binutils \
+    mercurial gcc g++ libxml2-dev automake m4 autoconf libtool pkg-config make python-dev libsqlite3-dev binutils git \
     && cd /home/opensaf \
     && hg clone http://hg.code.sf.net/p/opensaf/staging opensaf-staging \
     && cd opensaf-* \
@@ -45,6 +46,14 @@ RUN apt-get update && apt-get install -y \
     && make install \
     && ldconfig \
     && sed '/\. \/lib\/lsb\/init-functions/ a\\/etc\/init.d\/setup-opensaf-node' -i /etc/init.d/opensafd
+
+# build sample apps
+RUN cd /home/opensaf \
+    && git clone https://github.com/ianchen0119/opensaf-samples.git \
+    && cd opensaf-samples/ \
+    && ./bootstrap.sh \
+    && ./configure \
+    && make
 
 RUN groupadd opensaf && \
  useradd -r -g opensaf -d /var/run/opensaf -s /sbin/nologin -c "OpenSAF" opensaf && \
