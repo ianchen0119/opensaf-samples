@@ -1,0 +1,3 @@
+[submodule "go-cpsv"]
+	path = go-cpsv
+	url = https://github.com/ianchen0119/GO-CPSV.git
